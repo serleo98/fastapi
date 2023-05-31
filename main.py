@@ -1,26 +1,29 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Request
 
 app = FastAPI()
 
-class Msg(BaseModel):
-    msg: str
+@app.middleware("http")
+async def log_request(request: Request, call_next):
+    body = await request.body()
+    print("Solicitud recibida:", request.method, request.url.path)
+    print("Cuerpo de la solicitud:", body.decode())
+    print("---")
 
+    response = await call_next(request)
+
+    return response
 
 @app.get("/")
 async def root():
     return {"message": "Hello World. Welcome to FastAPI!"}
 
-
 @app.get("/path")
 async def demo_get():
     return {"message": "This is /path endpoint, use a post request to transform the text to uppercase"}
 
-
 @app.post("/path")
-async def demo_post(inp: Msg):
-    return {"message": inp.msg.upper()}
-
+async def demo_post():
+    return {"message": "This is /path endpoint, use a post request to transform the text to uppercase"}
 
 @app.get("/path/{path_id}")
 async def demo_get_path_id(path_id: int):
