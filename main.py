@@ -5,7 +5,9 @@ app = FastAPI()
 @app.middleware("http")
 async def log_request(request: Request, call_next):
     body = await request.body()
+    headers = dict(request.headers)
     print("Solicitud recibida:", request.method, request.url.path)
+    print("Encabezados de la solicitud:", headers)
     print("Cuerpo de la solicitud:", body.decode())
     print("---")
 
