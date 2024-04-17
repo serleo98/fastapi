@@ -27,6 +27,10 @@ async def demo_get():
 async def demo_post():
     return {"message": "This is /path endpoint, use a post request to transform the text to uppercase"}
 
+@app.post("/path/error")
+async def demo_post():
+    raise HTTPException(status_code=400, detail="This is an error message. Please use a POST request to transform the text to uppercase.")
+
 @app.get("/path/{path_id}")
 async def demo_get_path_id(path_id: int):
     return {"message": f"This is /path/{path_id} endpoint, use post request to retrieve result"}
