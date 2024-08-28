@@ -28,7 +28,7 @@ async def demo_post():
     return {"message": "This is /path endpoint, use a post request to transform the text to uppercase"}
 
 @app.post("/payments/notify")
-async def demo_post():
+async def payments_notify():
     return {"message": "This is /path endpoint, use a post request to transform the text to uppercase"}
     
 @app.post("/path-error")
